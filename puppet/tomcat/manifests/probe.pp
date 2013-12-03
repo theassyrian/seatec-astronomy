@@ -38,6 +38,15 @@ class tomcat::probe {
   $probe_version = "2.3.3"
   $installer = "probe-${probe_version}.war"
 
+# For convenience in troubleshooting Tomcat, let's install Psi-probe
+exec {"Download and install the Psi-probe war":
+   command   => "wget http://psi-probe.googlecode.com/files/probe-2.3.3.zip && unzip probe-2.3.3.zip && rm probe-2.3.3.zip",
+   cwd       => "${p1}",
+   creates   => "${p1}/${installer}",
+#  user      => "root",
+   logoutput => true,
+}
+
   File { owner => "0", group => "0", mode  => "0644" }
 
 	file {
